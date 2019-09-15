@@ -2,37 +2,31 @@ package core;
 
 import core.gui.JFrameManager;
 import core.gui.panels.FirstPanel;
+import core.gui.panels.IntroPanel;
 import core.gui.panels.SecondPanel;
+import core.mvc.controller.TestController;
+import org.postgresql.Driver;
 
 import javax.swing.*;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Main {
 
     private static JFrame frame;
-
     private static Main main;
 
-    public static Main getInstance(){
-        if(main == null){
-            main = new Main();
-        }
-        return main;
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public void setFrame(JFrame frame) {
-        Main.frame = frame;
-    }
-
     public static void main(String[] args) {
-        frame = new JFrame ("First frame");
-        frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add (new FirstPanel(frame));
+        try {
+            DriverManager.registerDriver(new Driver());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        frame = new JFrame("First frame");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(new IntroPanel(frame));
         frame.pack();
-        frame.setVisible (true);
+        frame.setVisible(true);
         JFrameManager.getInstance().addFrame(frame);
     }
 }
