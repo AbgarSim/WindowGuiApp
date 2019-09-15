@@ -1,5 +1,6 @@
 package core;
 
+import core.gui.JFrameManager;
 import core.gui.panels.FirstPanel;
 import core.gui.panels.SecondPanel;
 
@@ -27,10 +28,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        frame = new JFrame ("First");
+        frame = new JFrame ("First frame");
         frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add (new FirstPanel());
+        frame.getContentPane().add (new FirstPanel(frame));
         frame.pack();
         frame.setVisible (true);
+        JFrameManager.getInstance().addFrame(frame);
     }
 }

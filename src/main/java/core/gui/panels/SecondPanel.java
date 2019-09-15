@@ -1,12 +1,18 @@
 package core.gui.panels;
 
 import core.Main;
-import core.gui.listeners.ChangeScreenActionListener;
+import core.gui.JFrameManager;
+import core.gui.listeners.ChangeFirstScreenActionListener;
+import core.gui.listeners.ChangeSecondScreenActionListener;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class SecondPanel extends JPanel {
+
+    private JFrame parent;
+    private JFrameManager frameManager;
+
     private JLabel titleLabel;
     private JButton addButton;
     private JCheckBox checkBox;
@@ -15,7 +21,12 @@ public class SecondPanel extends JPanel {
     private JTextField to;
     private JComboBox<String> dropDown;
 
-    public SecondPanel() {
+    public SecondPanel(JFrame parent) {
+        //parent
+        this.parent = parent;
+        frameManager = JFrameManager.getInstance();
+        frameManager.pushFrame(parent);
+
         //construct preComponents
         String[] dropDownItems = {"Item 1", "Item 2", "Item 3"};
 
@@ -34,10 +45,9 @@ public class SecondPanel extends JPanel {
 
         //add listeners
         addButton.addActionListener(
-                new ChangeScreenActionListener(
-                        Main.getInstance().getFrame(),
-                        new JFrame ("First"),
-                        FirstPanel.class));
+                new ChangeSecondScreenActionListener(
+                        parent, "First frame"
+                ));
 
         //add components
         add (titleLabel);
